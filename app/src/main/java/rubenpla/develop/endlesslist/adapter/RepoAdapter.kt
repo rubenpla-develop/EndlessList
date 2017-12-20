@@ -19,16 +19,40 @@ class RepoAdapter(val context : Context, private val list: List<RepoBindModel?>,
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
+        return if (viewType == -1)
+            ProgressBarViewHolder(LayoutInflater.from(context).inflate(R.layout.item_progress,
+                    parent, false))
+        else
+            RepoViewHolder(LayoutInflater.from(context).inflate(R.layout.item_progress,
+                    parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-
+        if (holder is RepoViewHolder) holder.bind(list[position], listener)
+        else if (holder is ProgressBarViewHolder) holder.bind(true)
     }
 
 
     override fun getItemCount() = list.size
 
+    /**
+     * RepoBindModel ViewHolder
+     */
+    internal class RepoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding: ItemListBinding = DataBindingUtil.bind(itemView)
+        fun bind(user: RepoBindModel?, listener: (RepoBindModel?) -> Unit) {
+            binding.repo = user
+            itemView.setOnClickListener { listener(user) }
+        }
+    }
 
-
+    /**
+     * Progress bar ViewHolder
+     */
+    internal class ProgressBarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding: ItemProgressBinding = DataBindingUtil.bind(itemView)
+        fun bind(isIndeterminate: Boolean) {
+            binding.progressbar.isIndeterminate = isIndeterminate
+        }
+    }
 }
