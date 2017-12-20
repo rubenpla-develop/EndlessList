@@ -8,7 +8,7 @@ import rubenpla.develop.endlesslist.BR
  * Created by alten on 20/12/17.
  */
 
-class MainActivivityBindModel : BaseObservable() {
+class MainActivityBindModel : BaseObservable() {
 
     @get:Bindable
     var resetLoading: Boolean = false

@@ -8,7 +8,7 @@
 
         <variable
             name="mainModel"
-            type="rubenpla.develop.endlesslist.model.MainActivivityBindModel" />
+            type="rubenpla.develop.endlesslist.model.MainActivityBindModel" />
 
     </data>
 
@@ -27,7 +27,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_main" />
+                bind:resetLoading="@{mainModel.resetLoading}"
+                bind:visibleThreshold="@{mainModel.visibleThreshold}"
+                tools:listitem="@layout/item_list" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
     </android.support.design.widget.CoordinatorLayout>

@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import rubenpla.develop.endlesslist.databinding.ActivityMainBinding
+import rubenpla.develop.endlesslist.databinding.BindingComponent
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,6 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+                binding = DataBindingUtil.setContentView(this, R.layout.activity_main,
+                        BindingComponent())
     }
 }
