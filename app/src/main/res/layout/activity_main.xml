@@ -12,7 +12,7 @@
 
         <variable
             name="mainPresenter"
-            type="rubenpla.develop.endlesslist.mvp.MainActivityPresenterImpl" />
+            type="rubenpla.develop.endlesslist.mvp.ContractMvpMainActivity.Presenter" />
 
     </data>
 

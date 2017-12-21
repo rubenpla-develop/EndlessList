@@ -14,7 +14,7 @@ import rubenpla.develop.endlesslist.model.RepoBindModel
 /**
  * Created by alten on 20/12/17.
  */
-class RepoAdapter(val context : Context, private val list: List<RepoBindModel?>,
+class RepoAdapter(val context : Context, private val list: MutableList<RepoBindModel?>,
                   private val listener: (RepoBindModel?) -> Unit)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -23,7 +23,7 @@ class RepoAdapter(val context : Context, private val list: List<RepoBindModel?>,
             ProgressBarViewHolder(LayoutInflater.from(context).inflate(R.layout.item_progress,
                     parent, false))
         else
-            RepoViewHolder(LayoutInflater.from(context).inflate(R.layout.item_progress,
+            RepoViewHolder(LayoutInflater.from(context).inflate(R.layout.item_list,
                     parent, false))
     }
 
@@ -34,6 +34,26 @@ class RepoAdapter(val context : Context, private val list: List<RepoBindModel?>,
 
 
     override fun getItemCount() = list.size
+
+    fun add(repo : RepoBindModel?) {
+        list.add(repo)
+        notifyItemInserted(list.size -1)
+    }
+
+    fun addAll(repos : List<RepoBindModel>) {
+        list.addAll(repos)
+        notifyItemRangeChanged( repos.size,list.size -1)
+    }
+
+    fun remove(position: Int) {
+        list.removeAt(position)
+        notifyItemRemoved(list.size)
+    }
+
+    fun clear() {
+        list.clear()
+        notifyDataSetChanged()
+    }
 
     /**
      * RepoBindModel ViewHolder
