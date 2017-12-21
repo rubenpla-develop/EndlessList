@@ -1,19 +1,54 @@
 package rubenpla.develop.endlesslist.mvp
 
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.processors.PublishProcessor
+
 /**
  * Created by alten on 20/12/17.
  */
 class MainActivityPresenterImpl(private val view: ContractMvpMainActivity.View) :
         ContractMvpMainActivity.Presenter {
+
+    private val mainContract : ContractMvpMainActivity
+    private var currentPage: Int = 0
+    private val disposables : CompositeDisposable
+    private lateinit var paginator: PublishProcessor<Int>
+    private var loading : Boolean = false
+
+    init {
+        mainContract = ContractMainActivityImpl()
+        disposables = CompositeDisposable()
+        initialize()
+    }
+
     override fun initialize() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        currentPage = 1
+        paginator = PublishProcessor.create()
+
+        val disposable = paginator.onBackpressureDrop()
+                .filter { !loading }
+                .doOnNext { loading = view.showProgress()}
+                .concatMap { mainContract.getRepos(it) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    loading = view.hideProgress()
+                    view.showItems(it)
+                    currentPage++
+                }, {
+                    loading = view.hideProgress()
+                    view.showError(it.localizedMessage)
+                } )
+
+        disposables.add(disposable)
+        onLoadMore(currentPage)
     }
 
     override fun onLoadMore(page: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        paginator.onNext(page)
     }
 
     override fun terminate() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        disposables.clear()
     }
 }

@@ -1,12 +1,13 @@
 package rubenpla.develop.endlesslist.mvp
 
+import io.reactivex.Flowable
 import rubenpla.develop.endlesslist.entity.Repo
 
 /**
  * Created by alten on 20/12/17.
  */
 interface ContractMvpMainActivity {
-    fun getRepos(page: Int): List<Repo>
+    fun getRepos(page: Int): Flowable<List<Repo>>
 
     interface Presenter {
         fun initialize()
