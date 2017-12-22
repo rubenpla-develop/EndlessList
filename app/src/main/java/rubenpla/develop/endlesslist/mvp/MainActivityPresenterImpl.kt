@@ -26,6 +26,20 @@ class MainActivityPresenterImpl(private val view: ContractMvpMainActivity.View) 
         currentPage = 1
         paginator = PublishProcessor.create()
 
+        /*val loadReposRepository = GetReposRepositoryProvider.provideGetReposRepository()
+
+        disposables.add(
+                loadReposRepository.getRepos(1, 10)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe ({
+                            it->
+                            Log.d("Result", "There are ${it.items.size} items")
+                        }, { error ->
+                            error.printStackTrace()
+                        })
+        )*/
+
         val disposable = paginator.onBackpressureDrop()
                 .filter { !loading }
                 .doOnNext { loading = view.showProgress()}

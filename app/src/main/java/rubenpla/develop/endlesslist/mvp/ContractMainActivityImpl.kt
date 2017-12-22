@@ -2,7 +2,10 @@ package rubenpla.develop.endlesslist.mvp
 
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import rubenpla.develop.endlesslist.api.GetReposRepositoryProvider
+import rubenpla.develop.endlesslist.entity.Owner
 import rubenpla.develop.endlesslist.entity.Repo
+import rubenpla.develop.endlesslist.entity.Repo3
 import java.util.concurrent.TimeUnit
 
 /**
@@ -20,6 +23,14 @@ class ContractMainActivityImpl : ContractMvpMainActivity {
         return (getStartIndex(page) until page * ContractMvpMainActivity.PAGE_SIZE)
                 .map { Repo(it, "repoName", "OwnerName",
                         "Description") }
+                /*.map { Repo3(25,
+                        "repo_name",
+                         Owner("www.google.es",
+                        "ruben"),
+                        "www.google.es",
+                        "codeby.Lucky",
+                        false)
+                }*/
     }
 
     private fun getStartIndex(page: Int) = (page - 1) * ContractMvpMainActivity.PAGE_SIZE
