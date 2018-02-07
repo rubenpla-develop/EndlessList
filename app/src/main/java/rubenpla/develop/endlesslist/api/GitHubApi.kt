@@ -5,11 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import rubenpla.develop.endlesslist.entity.ResultRepos
 
-/**
- * Created by alten on 21/12/17.
- */
-
-interface GithubApi {
+interface GitHubApi {
 
     @GET("users/xing/repos")
     fun loadRepos(@Query("page") page : Int,
