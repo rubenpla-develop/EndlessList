@@ -6,6 +6,6 @@ package rubenpla.develop.endlesslist.api
 object GetReposRepositoryProvider {
 
     fun provideGetReposRepository() : GetReposRepository {
-        return GetReposRepository(GithubApi.Factory.create())
+        return GetReposRepository(GitHubApi.Factory.create())
     }
 }
