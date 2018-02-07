@@ -1,14 +1,14 @@
 package rubenpla.develop.endlesslist.api
 
-import io.reactivex.Observable
-import rubenpla.develop.endlesslist.entity.ResultRepos
+import io.reactivex.Flowable
+import rubenpla.develop.endlesslist.entity.RepoApi
 
 /**
  * Created by alten on 21/12/17.
  */
-class GetReposRepository(val apiService : GithubApi) {
+class GetReposRepository(private val apiService : GitHubApi) {
 
-    fun getRepos(page : Int, pageSize : Int) : Observable<ResultRepos> {
-        return apiService.loadRepos(page, pageSize)
+    fun getReposFromApi(page : Int, pageSize : Int) : Flowable<List<RepoApi>> {
+        return apiService.loadReposFromApi(page, pageSize)
     }
 }

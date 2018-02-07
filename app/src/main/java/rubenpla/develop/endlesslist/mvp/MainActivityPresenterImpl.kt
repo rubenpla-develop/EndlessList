@@ -4,10 +4,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.processors.PublishProcessor
 
-/**
- * Created by alten on 20/12/17.
- */
-class MainActivityPresenterImpl(private val view: ContractMvpMainActivity.View) :
+class MainActivityPresenterImpl(private val view : ContractMvpMainActivity.View) :
         ContractMvpMainActivity.Presenter {
 
     private val mainContract : ContractMvpMainActivity
@@ -26,28 +23,14 @@ class MainActivityPresenterImpl(private val view: ContractMvpMainActivity.View) 
         currentPage = 1
         paginator = PublishProcessor.create()
 
-        /*val loadReposRepository = GetReposRepositoryProvider.provideGetReposRepository()
-
-        disposables.add(
-                loadReposRepository.getRepos(1, 10)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe ({
-                            it->
-                            Log.d("Result", "There are ${it.items.size} items")
-                        }, { error ->
-                            error.printStackTrace()
-                        })
-        )*/
-
         val disposable = paginator.onBackpressureDrop()
                 .filter { !loading }
                 .doOnNext { loading = view.showProgress()}
-                .concatMap { mainContract.getRepos(it) }
+                .concatMap { mainContract.getReposFromApi(it) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     loading = view.hideProgress()
-                    view.showItems(it)
+                    view.showItemsFromApi(it)
                     currentPage++
                 }, {
                     loading = view.hideProgress()

@@ -1,6 +1,7 @@
 package rubenpla.develop.endlesslist.utils
 
 import rubenpla.develop.endlesslist.entity.Repo
+import rubenpla.develop.endlesslist.entity.RepoApi
 import rubenpla.develop.endlesslist.model.RepoBindModel
 
 /**
@@ -17,6 +18,14 @@ object Mapper {
         val repoModel = RepoBindModel()
         repoModel.repoName = repo.repoName
         repoModel.owner = repo.repoOwner
+        repoModel.description = repo.description
+        return repoModel
+    }
+
+    fun mapToUserModelFromApi(repo : RepoApi): RepoBindModel {
+        val repoModel = RepoBindModel()
+        repoModel.repoName = repo.name
+        repoModel.owner = repo.owner.login
         repoModel.description = repo.description
         return repoModel
     }

@@ -8,6 +8,7 @@ import rubenpla.develop.endlesslist.adapter.RepoAdapter
 import rubenpla.develop.endlesslist.databinding.ActivityMainBinding
 import rubenpla.develop.endlesslist.databinding.BindingComponent
 import rubenpla.develop.endlesslist.entity.Repo
+import rubenpla.develop.endlesslist.entity.RepoApi
 import rubenpla.develop.endlesslist.model.MainActivityBindModel
 import rubenpla.develop.endlesslist.model.RepoBindModel
 import rubenpla.develop.endlesslist.mvp.ContractMvpMainActivity
@@ -69,6 +70,12 @@ class MainActivity : AppCompatActivity(), ContractMvpMainActivity.View {
     override fun showItems(items: List<Repo>) {
         val mappedItems = arrayListOf<RepoBindModel>()
         items.map { mappedItems.add( Mapper.mapToUserModel(it) ) }
+        repoAdapter.addAll(mappedItems)
+    }
+
+    override fun showItemsFromApi(items: List<RepoApi>) {
+        val mappedItems = arrayListOf<RepoBindModel>()
+        items.map { mappedItems.add( Mapper.mapToUserModelFromApi(it) ) }
         repoAdapter.addAll(mappedItems)
     }
 
