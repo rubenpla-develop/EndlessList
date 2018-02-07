@@ -24,7 +24,7 @@ class RepoBindModel : BaseObservable() {
         }
 
     @get:Bindable
-    var description: String = ""
+    var description: String? = ""
         set(descriptionContent) {
             field = descriptionContent
             notifyPropertyChanged(BR.description)
